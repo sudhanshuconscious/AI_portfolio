@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sudhanshu Sharma – Web and AI developer, in progress</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Newsreader:opsz,wght@6..72,400;6..72,500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #F1F4F6;
+    --ink: #12202B;
+    --muted: #4A5B69;
+    --line: #C7D1D8;
+    --accent: #0E6B73;
+    --sun: #D98E04;
+    --empty: #DAE2E7;
+    --display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+    --body: "Newsreader", Georgia, "Times New Roman", serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0F1A21;
+      --ink: #E7EEF2;
+      --muted: #9DAEBB;
+      --line: #2A3A45;
+      --accent: #4FC3C9;
+      --sun: #F2B33D;
+      --empty: #1B2A33;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #0F1A21;
+    --ink: #E7EEF2;
+    --muted: #9DAEBB;
+    --line: #2A3A45;
+    --accent: #4FC3C9;
+    --sun: #F2B33D;
+    --empty: #1B2A33;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--body);
+    font-size: 1.125rem;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: var(--accent); text-underline-offset: 3px; }
+  a:focus-visible, button:focus-visible {
+    outline: 3px solid var(--sun);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  .wrap { max-width: 1040px; margin: 0 auto; padding: 0 1.25rem; }
+
+  /* Top bar */
+  .top { display: flex; justify-content: space-between; align-items: baseline; padding: 1.5rem 0; font-family: var(--display); font-weight: 500; font-size: 1rem; }
+  .top nav { display: flex; gap: 1.5rem; }
+  .top a { color: var(--ink); text-decoration: none; }
+  .top a:hover { color: var(--accent); }
+
+  /* Hero */
+  .hero { padding: clamp(2.5rem, 8vw, 6rem) 0 3rem; }
+  h1 {
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: clamp(3rem, 11vw, 8rem);
+    line-height: 0.95;
+    letter-spacing: -0.035em;
+    margin: 0 0 1.5rem;
+  }
+  .lede { max-width: 34rem; font-size: clamp(1.2rem, 2.4vw, 1.5rem); line-height: 1.45; color: var(--muted); margin: 0 0 3rem; }
+
+  .year { margin: 0; }
+  .year-grid {
+    display: grid;
+    grid-template-columns: repeat(53, 1fr);
+    gap: clamp(1.5px, 0.4vw, 4px);
+  }
+  .cell { aspect-ratio: 1; background: var(--empty); border-radius: 15%; }
+  .cell.gap { visibility: hidden; }
+  .cell.past { background: var(--accent); animation: fill 0.5s both; animation-delay: calc(var(--c) * 14ms); }
+  .cell.today { background: var(--sun); }
+  @keyframes fill { from { opacity: 0; transform: scale(0.3); } }
+  .year figcaption { margin-top: 1rem; font-family: var(--display); font-weight: 500; font-size: 1rem; display: flex; flex-wrap: wrap; gap: 0.25rem 1.5rem; }
+  .year figcaption strong { font-weight: 700; }
+  .key { display: inline-flex; align-items: center; gap: 0.4rem; color: var(--muted); }
+  .key i { width: 0.75rem; height: 0.75rem; border-radius: 15%; display: inline-block; }
+
+  /* Sections */
+  section { padding: clamp(3rem, 7vw, 5.5rem) 0; border-top: 1px solid var(--line); }
+  h2 { font-family: var(--display); font-weight: 700; font-size: clamp(1.75rem, 4vw, 2.5rem); letter-spacing: -0.02em; line-height: 1.1; margin: 0 0 0.75rem; }
+  .intro { max-width: 36rem; color: var(--muted); margin: 0 0 2.5rem; }
+
+  /* Projects */
+  .project { display: grid; grid-template-columns: 9rem 1fr; gap: 0.5rem 2rem; padding: 1.5rem 0; border-top: 1px solid var(--line); }
+  .project:last-child { border-bottom: 1px solid var(--line); }
+  .status { font-family: var(--display); font-weight: 500; font-size: 1rem; display: flex; align-items: center; gap: 0.55rem; height: 1.6em; }
+  .dot { width: 0.85rem; height: 0.85rem; border-radius: 50%; border: 2px solid var(--accent); flex: none; }
+  .dot.live { background: var(--accent); }
+  .dot.building { background: linear-gradient(90deg, var(--accent) 50%, transparent 50%); }
+  .project h3 { font-family: var(--display); font-weight: 700; font-size: 1.35rem; line-height: 1.25; margin: 0 0 0.25rem; letter-spacing: -0.01em; }
+  .project p { margin: 0 0 0.5rem; max-width: 40rem; }
+  .stack { color: var(--muted); font-size: 1rem; }
+
+  /* Year plan */
+  .phase { display: grid; grid-template-columns: 9rem 1fr; gap: 0.5rem 2rem; padding: 1.5rem 0; border-top: 1px solid var(--line); }
+  .phase:last-child { border-bottom: 1px solid var(--line); }
+  .when { font-family: var(--display); font-weight: 500; font-size: 1rem; }
+  .phase h3 { font-family: var(--display); font-weight: 700; font-size: 1.35rem; margin: 0 0 0.25rem; line-height: 1.25; letter-spacing: -0.01em; }
+  .phase p { margin: 0 0 0.5rem; max-width: 40rem; }
+  .phase .ship { color: var(--muted); font-size: 1rem; }
+
+  /* Contact */
+  .contact h2 { font-size: clamp(2rem, 6vw, 3.75rem); }
+  .contact .mail { font-family: var(--display); font-weight: 700; font-size: clamp(1.25rem, 3.5vw, 2rem); word-break: break-word; }
+  .links { display: flex; flex-wrap: wrap; gap: 1.5rem; margin-top: 1.5rem; font-family: var(--display); font-weight: 500; }
+
+  footer { padding: 2rem 0 3rem; border-top: 1px solid var(--line); color: var(--muted); font-family: var(--display); font-size: 0.95rem; }
+
+  @media (max-width: 640px) {
+    .project, .phase { grid-template-columns: 1fr; gap: 0.25rem; }
+    .top nav { gap: 1rem; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .cell.past { animation: none; }
+  }
+</style>
+</head>
+<body>
+
+<!--
+  HOW TO EDIT THIS PAGE
+  1. Change START_DATE in the script at the bottom if your year begins on a different day.
+  2. Edit the PROJECTS list in the script: set status to "planned", "building" or "live" and add real links.
+  3. Replace the email and the GitHub / LinkedIn links in the Contact section.
+-->
+
+<div class="wrap">
+  <header class="top">
+    <span>Sudhanshu Sharma</span>
+    <nav aria-label="Sections">
+      <a href="#projects">Projects</a>
+      <a href="#plan">The year</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <main>
+    <div class="hero">
+      <h1>Sudhanshu Sharma</h1>
+      <p class="lede">I'm learning to build websites, apps and AI features, and I'm doing it in public. Every day of the next year is a square below.</p>
+
+      <figure class="year">
+        <div class="year-grid" id="yearGrid" role="img" aria-label="A grid of 365 squares, one for each day of my learning year. Squares fill in as days pass."></div>
+        <figcaption>
+          <strong id="dayCount">Day 1 of 365</strong>
+          <span id="startedOn"></span>
+          <span class="key"><i style="background:var(--accent)"></i>Days passed</span>
+          <span class="key"><i style="background:var(--sun)"></i>Today</span>
+        </figcaption>
+      </figure>
+    </div>
+
+    <section id="projects">
+      <h2>What I'm building</h2>
+      <p class="intro">Each project is chosen to prove one thing a team would want to see. The status shows where it really is.</p>
+      <div id="projectList"></div>
+    </section>
+
+    <section id="plan">
+      <h2>The year, in four parts</h2>
+      <p class="intro">The order matters: the basics first, then the tools teams use daily, then the back end, then AI with real users.</p>
+
+      <div class="phase">
+        <div class="when">Oct – Dec 2026</div>
+        <div>
+          <h3>Foundations</h3>
+          <p>HTML, CSS, JavaScript, Git and GitHub, and building pages that work on a phone as well as a laptop.</p>
+          <p class="ship">Ships: this portfolio and two more small sites.</p>
+        </div>
+      </div>
+      <div class="phase">
+        <div class="when">Jan – Mar 2027</div>
+        <div>
+          <h3>Front end, the way teams do it</h3>
+          <p>React, TypeScript, calling APIs, handling loading and error states, and writing basic tests.</p>
+          <p class="ship">Ships: a habit tracker with saved data.</p>
+        </div>
+      </div>
+      <div class="phase">
+        <div class="when">Apr – Jun 2027</div>
+        <div>
+          <h3>Back end and data</h3>
+          <p>Node.js, PostgreSQL, sign-in and permissions, and putting a real app on the internet.</p>
+          <p class="ship">Ships: a notes app with accounts and an API.</p>
+        </div>
+      </div>
+      <div class="phase">
+        <div class="when">Jul – Sep 2027</div>
+        <div>
+          <h3>AI, real users and real work</h3>
+          <p>Working with language-model APIs, answering questions from a person's own documents, and building for someone who is not me. Freelance work and job applications start here.</p>
+          <p class="ship">Ships: an AI product with at least one real user.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="contact">
+      <h2>Want to talk?</h2>
+      <p class="intro">I'm open to internships, junior roles and small freelance projects.</p>
+      <a class="mail" href="mailto:you@example.com">you@example.com</a>
+      <div class="links">
+        <a href="https://github.com/sudhanshuconscious">GitHub</a>
+        <a href="https://leetcode.com/u/sudhanshu_conscious/">LeetCode</a>
+        <a href="https://www.linkedin.com/">LinkedIn</a>
+        <a href="https://x.com/sudhanshu_back">X</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>Built by hand with HTML, CSS and JavaScript.</footer>
+</div>
+
+<script>
+  // ---- Edit these ----
+  const START_DATE = new Date(2026, 9, 1); // year, month (0 = January), day
+  const TOTAL_DAYS = 365;
+
+  const PROJECTS = [
+    {
+      title: "This portfolio",
+      status: "live",
+      what: "A responsive, accessible site written without a framework. It proves I can design and ship a clean page.",
+      stack: "HTML, CSS, JavaScript",
+      link: ""
+    },
+    {
+      title: "Habit tracker",
+      status: "planned",
+      what: "Add habits, tick them off each day, see streaks. It proves I can manage state and save data in a React app.",
+      stack: "React, TypeScript",
+      link: ""
+    },
+    {
+      title: "Notes app with accounts",
+      status: "planned",
+      what: "Sign up, log in, and keep private notes through my own API. It proves I can build the full path from screen to database.",
+      stack: "Node.js, PostgreSQL",
+      link: ""
+    },
+    {
+      title: "Ask my documents",
+      status: "planned",
+      what: "Upload a PDF and ask questions about it, with answers that point to the page they came from. It proves I can build useful AI features.",
+      stack: "Language-model API, embeddings",
+      link: ""
+    }
+  ];
+  // --------------------
+
+  const STATUS_LABEL = { live: "Live", building: "In progress", planned: "Planned" };
+
+  // Projects
+  const list = document.getElementById("projectList");
+  PROJECTS.forEach(function (p) {
+    const row = document.createElement("article");
+    row.className = "project";
+
+    const status = document.createElement("div");
+    status.className = "status";
+    const dot = document.createElement("span");
+    dot.className = "dot " + p.status;
+    dot.setAttribute("aria-hidden", "true");
+    status.appendChild(dot);
+    status.appendChild(document.createTextNode(STATUS_LABEL[p.status] || p.status));
+
+    const body = document.createElement("div");
+    const h3 = document.createElement("h3");
+    if (p.link) {
+      const a = document.createElement("a");
+      a.href = p.link;
+      a.textContent = p.title;
+      h3.appendChild(a);
+    } else {
+      h3.textContent = p.title;
+    }
+    const what = document.createElement("p");
+    what.textContent = p.what;
+    const stack = document.createElement("div");
+    stack.className = "stack";
+    stack.textContent = p.stack;
+
+    body.appendChild(h3);
+    body.appendChild(what);
+    body.appendChild(stack);
+    row.appendChild(status);
+    row.appendChild(body);
+    list.appendChild(row);
+  });
+
+  // Year grid: 53 week columns by 7 day rows
+  const grid = document.getElementById("yearGrid");
+  const startOfToday = new Date();
+  startOfToday.setHours(0, 0, 0, 0);
+  const msPerDay = 86400000;
+  const dayNumber = Math.floor((startOfToday - START_DATE) / msPerDay) + 1; // 1-based
+  const fmt = new Intl.DateTimeFormat("en-GB", { day: "numeric", month: "long", year: "numeric" });
+
+  for (let r = 0; r < 7; r++) {
+    for (let c = 0; c < 53; c++) {
+      const i = c * 7 + r; // 0-based day index
+      const cell = document.createElement("div");
+      cell.className = "cell";
+      cell.style.setProperty("--c", c);
+      if (i >= TOTAL_DAYS) {
+        cell.classList.add("gap");
+      } else {
+        const d = new Date(START_DATE.getTime() + i * msPerDay);
+        cell.title = "Day " + (i + 1) + ": " + fmt.format(d);
+        if (i < dayNumber - 1) cell.classList.add("past");
+        else if (i === dayNumber - 1) cell.classList.add("today");
+      }
+      grid.appendChild(cell);
+    }
+  }
+
+  const shown = Math.min(Math.max(dayNumber, 0), TOTAL_DAYS);
+  document.getElementById("dayCount").textContent =
+    dayNumber < 1 ? "Starts soon" : "Day " + shown + " of " + TOTAL_DAYS;
+  document.getElementById("startedOn").textContent =
+    (dayNumber < 1 ? "Starts " : "Started ") + fmt.format(START_DATE);
+</script>
+</body>
+</html>
